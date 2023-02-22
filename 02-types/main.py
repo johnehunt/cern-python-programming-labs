@@ -18,7 +18,7 @@ value = input_string1 + input_string2
 print('The new value is', value)
 print('The type of the value is now', type(value))
 
-title = 'Data Processing App Version' + str(1.0)
+title = 'Data Processing App Version ' + str(1.0)
 print(f'The title of this app is {title}')
 
 user = None
