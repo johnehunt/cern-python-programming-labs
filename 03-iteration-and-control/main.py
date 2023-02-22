@@ -47,11 +47,10 @@ while not game_over:
     # Check to see if they did guess the correct number
     if number_to_guess == guess:
         print('Well done you won!')
-        print('You took', count_number_of_tries, 'goes to complete the game')
+        print(f'You took {count_number_of_tries} goes to complete the game')
     else:
         print("Sorry - you loose")
-        print('The number you needed to guess was',
-              number_to_guess)
+        print(f'The number you needed to guess was {number_to_guess}')
 
     play_again = input("Do you want to play again? ")
     if play_again.lower() == 'n' or play_again.lower() == 'no':
