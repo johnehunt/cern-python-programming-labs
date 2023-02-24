@@ -9,8 +9,8 @@ MAX_VALUE = 10
 MAX_NUMBER_OF_GUESSES = 4
 GUESS_PROMPT = 'Please guess a number between ' + str(MIN_VALUE) + ' and ' + str(MAX_VALUE) + ': '
 
-# current user
-current_user = None
+# current player
+current_player = None
 
 # Low score dictionary
 low_score_dictionary = {}
@@ -33,12 +33,12 @@ while not game_over:
     print('Welcome to the number guess game')
 
     check_new_user = 'n'
-    if current_user is not None:
-        user_prompt = f'The current user is {current_user}, do you wish to enter a new name (y/n): '
+    if current_player is not None:
+        user_prompt = f'The current user is {current_player}, do you wish to enter a new name (y/n): '
         check_new_user = input(user_prompt).lower()
 
-    if check_new_user == 'y' or current_user is None:
-        current_user = input('Please input your name: ')
+    if check_new_user == 'y' or current_player is None:
+        current_player = input('Please input your name: ')
 
     # Obtain their initialise guess
     guess = 0
@@ -82,9 +82,9 @@ while not game_over:
         print("Sorry - you loose")
         print(f'The number you needed to guess was {number_to_guess}')
 
-    previous_low_score = low_score_dictionary.get(current_user, 1000)
+    previous_low_score = low_score_dictionary.get(current_player, 1000)
     if previous_low_score > count_number_of_tries:
-        low_score_dictionary[current_user] = count_number_of_tries
+        low_score_dictionary[current_player] = count_number_of_tries
 
     # Present the guess history
     print('Your guesses were:')
