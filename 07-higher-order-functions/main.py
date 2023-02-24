@@ -92,7 +92,7 @@ def analyse_low_score_table():
     low_score_average = low_score_total / low_score_length
     print(f'Average of low scores: {low_score_average}')
     # Filter scores
-    scores_above_three = list(filter(lambda item: item[1] > 3, low_score_dictionary.items()))
+    scores_above_three = list(filter(lambda item: item[1] > 2, low_score_dictionary.items()))
     print(f'Scores above 3 {scores_above_three}')
     scores_in_ascending_order = sorted(low_score_dictionary.items(), key=lambda item: item[1])
     print(f'Scores in ascending order {scores_in_ascending_order}')
@@ -101,10 +101,10 @@ def analyse_low_score_table():
                                         key=lambda item: item[1])
     print(f'Scores in descending order {scores_in_descending_order}')
     # chain HOF for filter and sorting
-    scores_in_ascending_order_above_three = sorted(filter(lambda item: item[1] > 3, low_score_dictionary.items()),
+    scores_in_ascending_order_above_three = sorted(filter(lambda item: item[1] > 2, low_score_dictionary.items()),
                                                    key=lambda item: item[1])
     print(f'Scores in ascending order above three {scores_in_ascending_order_above_three}')
-    scores_in_descending_order_above_three = sorted(filter(lambda item: item[1] > 3, low_score_dictionary.items()),
+    scores_in_descending_order_above_three = sorted(filter(lambda item: item[1] > 2, low_score_dictionary.items()),
                                                     reverse=True,
                                                     key=lambda item: item[1])
     print(f'Scores in descending order above three {scores_in_descending_order_above_three}')
