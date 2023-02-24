@@ -42,7 +42,7 @@ while not game_over:
 
     # Obtain their initialise guess
     guess = 0
-    while number_to_guess != guess:
+    while number_to_guess != guess or count_number_of_tries == MAX_NUMBER_OF_GUESSES:
 
         # Set up a message to user variable
         message_to_user = ''
@@ -57,7 +57,6 @@ while not game_over:
             continue
         elif count_number_of_tries + 1 == MAX_NUMBER_OF_GUESSES:
             message_to_user = 'Max number of guesses made'
-            break
         elif number_to_guess == guess:
             message_to_user = 'Correct Guess'
         elif guess + 1 == number_to_guess or guess -1 == number_to_guess:
