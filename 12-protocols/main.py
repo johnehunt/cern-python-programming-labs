@@ -164,7 +164,9 @@ def play_game():
 
         # Present the guess history
         print('Your guesses were:')
-        current_player.print_history()
+        #current_player.print_history()
+        for guess in current_player:
+            print(guess)
 
         # Print the length fo the player
         print('The length of the player history is', len(current_player))

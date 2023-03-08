@@ -52,3 +52,7 @@ class Player:
     # Implement the length Protocol
     def __len__(self):
         return len(self.history)
+
+    # Makes this class Iterable
+    def __iter__(self):
+        return self.history.__iter__()
