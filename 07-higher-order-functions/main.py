@@ -78,6 +78,10 @@ def get_user_guess(prompt):
     return user_input_int
 
 
+def generate_number_to_guess(start=MIN_VALUE, end=MAX_VALUE):
+    number_to_guess = random.randint(start, end)
+    return number_to_guess
+
 def update_low_score_table(user, count_number_of_tries):
     previous_low_score = low_score_dictionary.get(user, 1000)
     if previous_low_score > count_number_of_tries:
@@ -87,10 +91,7 @@ def update_low_score_table(user, count_number_of_tries):
 def analyse_low_score_table():
     low_score_length = len(low_score_dictionary)
     print(f'Number of scores in low score table: {low_score_length}')
-    func = lambda total, item: total + item[1]
-    low_score_total = reduce(func, low_score_dictionary.items(), 0)
-    low_score_average = low_score_total / low_score_length
-    print(f'Average of low scores: {low_score_average}')
+
     # Filter scores
     scores_above_three = list(filter(lambda item: item[1] > 2, low_score_dictionary.items()))
     print(f'Scores above 3 {scores_above_three}')
@@ -119,7 +120,7 @@ def play_game():
         history = []
 
         # Initialise the number to be guessed
-        number_to_guess = random.randint(MIN_VALUE, MAX_VALUE)
+        number_to_guess = generate_number_to_guess()
 
         # Initialise the number of tries the player has made
         count_number_of_tries = 0
@@ -176,6 +177,12 @@ def play_game():
         # Present the guess history
         print('Your guesses were:')
         print(history)
+
+        def format_entry(entry):
+            return f'{"-" * 25}\nGuess[{entry[0]}]\n{entry[1]}'
+
+        for entry in history:
+            print(format_entry(entry))
 
         play_again = input("Do you want to play again? ")
         if play_again.lower() == 'n' or play_again.lower() == 'no':
