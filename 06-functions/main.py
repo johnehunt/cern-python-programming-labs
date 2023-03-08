@@ -80,6 +80,10 @@ def update_low_score_table(user, count_number_of_tries):
         low_score_dictionary[current_player] = count_number_of_tries
 
 
+def generate_number_to_guess(start=MIN_VALUE, end=MAX_VALUE):
+    number_to_guess = random.randint(start, end)
+    return number_to_guess
+
 def play_game():
     # Set up main game loop variable
     game_over = False
@@ -88,8 +92,8 @@ def play_game():
         # Initialise the history of guesses
         history = []
 
-        # Initialise the number to be guessed
-        number_to_guess = random.randint(MIN_VALUE, MAX_VALUE)
+        # Initialise the number to be guessed - now as a function
+        number_to_guess = generate_number_to_guess()
 
         # Initialise the number of tries the player has made
         count_number_of_tries = 0
