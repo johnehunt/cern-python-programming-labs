@@ -105,13 +105,17 @@ def analyse_low_score_table():
     print(f'Scores in descending order above three {scores_in_descending_order_above_three}')
 
 
+def generate_number_to_guess(start=MIN_VALUE, end=MAX_VALUE):
+    number_to_guess = random.randint(start, end)
+    return number_to_guess
+
 def play_game():
     # Set up main game loop variable
     game_over = False
     while not game_over:
 
         # Initialise the number to be guessed
-        number_to_guess = random.randint(MIN_VALUE, MAX_VALUE)
+        number_to_guess = generate_number_to_guess()
 
         # display instructions if required
         display_instructions()
