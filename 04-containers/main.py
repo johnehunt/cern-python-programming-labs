@@ -28,7 +28,7 @@ while not game_over:
 
     # Obtain their initialise guess
     guess = 0
-    while number_to_guess != guess or count_number_of_tries == MAX_NUMBER_OF_GUESSES:
+    while number_to_guess != guess and count_number_of_tries != MAX_NUMBER_OF_GUESSES:
 
         # Set up a message to user variable
         message_to_user = ''
@@ -41,10 +41,10 @@ while not game_over:
         if guess == -1:
             print('The number to guess is', number_to_guess)
             continue
-        elif count_number_of_tries + 1 == MAX_NUMBER_OF_GUESSES:
-            message_to_user = 'Max number of guesses made'
         elif number_to_guess == guess:
             message_to_user = 'Correct Guess'
+        elif count_number_of_tries + 1 == MAX_NUMBER_OF_GUESSES:
+            message_to_user = 'Max number of guesses made'
         elif guess + 1 == number_to_guess or guess -1 == number_to_guess:
             message_to_user = 'Sorry wrong number - you were out by 1'
         elif guess < number_to_guess:
@@ -71,6 +71,21 @@ while not game_over:
     # Present the guess history
     print('Your guesses were:')
     print(history)
+
+    total = 0
+    lowest_value = 9999
+    highest_value = 0
+    for item in history:
+        total = total + item[0]
+        if lowest_value > item[0]:
+            lowest_value = item [0]
+        if highest_value < item[0]:
+            highest_value = item[0]
+
+    print(f'The lowest value entered: {lowest_value}')
+    print(f'The highest value entered: {highest_value}')
+    print(f'Average value is: {total / len(history)}')
+
 
     play_again = input("Do you want to play again? ")
     if play_again.lower() == 'n' or play_again.lower() == 'no':
