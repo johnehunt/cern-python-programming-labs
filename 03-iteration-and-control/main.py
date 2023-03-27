@@ -4,13 +4,13 @@ import random
 MIN_VALUE = 1
 MAX_VALUE = 10
 MAX_NUMBER_OF_GUESSES = 4
-GUESS_PROMPT = 'Please guess a number between ' + str(MIN_VALUE) + ' and ' + str(MAX_VALUE) + ': '
+GUESS_PROMPT = f'Please guess a number between {MIN_VALUE} and {MAX_VALUE}: '
 
 # Set up variables to be used in the game
 game_over = False
 
 while not game_over:
-    # Initialise the number to be guessed
+    # Initialise the number to be guessed - includes both end points
     number_to_guess = random.randint(MIN_VALUE, MAX_VALUE)
 
     # Initialise the number of tries the player has made
@@ -28,7 +28,7 @@ while not game_over:
         # number of attempts if so break out of loop otherwise
         # give the user come feedback
         if guess == -1:
-            print('The number to guess is', number_to_guess)
+            print(f'The number to guess is {number_to_guess}')
             continue
         elif count_number_of_tries + 1 == MAX_NUMBER_OF_GUESSES:
             break
