@@ -20,8 +20,8 @@ while not game_over:
     print('Welcome to the number guess game')
 
     # Obtain their initialise guess
-    guess = 0
-    while number_to_guess != guess:
+    number_not_guessed = True
+    while number_not_guessed:
         guess = int(input(GUESS_PROMPT))
 
         # Check to see they have not exceeded the maximum
@@ -30,9 +30,9 @@ while not game_over:
         if guess == -1:
             print(f'The number to guess is {number_to_guess}')
             continue
-        elif count_number_of_tries + 1 == MAX_NUMBER_OF_GUESSES:
-            break
-        elif guess + 1 == number_to_guess or guess -1 == number_to_guess:
+        elif number_to_guess != guess:
+            number_not_guessed = False
+        elif guess + 1 == number_to_guess or guess - 1 == number_to_guess:
             print('Sorry wrong number - you were out by 1')
         elif guess < number_to_guess:
             print('Sorry wrong number')
@@ -44,6 +44,9 @@ while not game_over:
         # Obtain their next guess and increment number of attempts
         count_number_of_tries += 1
 
+        if count_number_of_tries == MAX_NUMBER_OF_GUESSES:
+            break
+
     # Check to see if they did guess the correct number
     if number_to_guess == guess:
         print('Well done you won!')
@@ -52,8 +55,17 @@ while not game_over:
         print("Sorry - you loose")
         print(f'The number you needed to guess was {number_to_guess}')
 
-    play_again = input("Do you want to play again? ")
-    if play_again.lower() == 'n' or play_again.lower() == 'no':
-        game_over = True
+    input_not_accepted = True
+    while input_not_accepted:
+        play_again = input("Do you want to play again (y/n) or (yes/no)? ")
+        play_again = play_again.lower()
+        if play_again == 'n' or play_again == 'no':
+            game_over = True
+            input_not_accepted = False
+        elif play_again == 'y' or play_again == 'yes':
+            input_not_accepted = False
+        else:
+            print('Invalid input must be y/n or yes/no')
+
 
 print('Game Over')

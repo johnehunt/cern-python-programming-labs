@@ -7,7 +7,7 @@ import random
 MIN_VALUE = 1
 MAX_VALUE = 10
 MAX_NUMBER_OF_GUESSES = 4
-GUESS_PROMPT = 'Please guess a number between ' + str(MIN_VALUE) + ' and ' + str(MAX_VALUE) + ': '
+GUESS_PROMPT = f'Please guess a number between {MIN_VALUE} and {MAX_VALUE}: '
 
 # Set up variables to be used in the game
 game_over = False
@@ -86,9 +86,16 @@ while not game_over:
     print(f'The highest value entered: {highest_value}')
     print(f'Average value is: {total / len(history)}')
 
-
-    play_again = input("Do you want to play again? ")
-    if play_again.lower() == 'n' or play_again.lower() == 'no':
-        game_over = True
+    input_not_accepted = True
+    while input_not_accepted:
+        play_again = input("Do you want to play again (y/n) or (yes/no)? ")
+        play_again = play_again.lower()
+        if play_again == 'n' or play_again == 'no':
+            game_over = True
+            input_not_accepted = False
+        elif play_again == 'y' or play_again == 'yes':
+            input_not_accepted = False
+        else:
+            print('Invalid input must be y/n or yes/no')
 
 print('Game Over')
