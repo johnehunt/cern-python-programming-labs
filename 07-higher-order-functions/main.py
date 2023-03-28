@@ -181,8 +181,7 @@ def play_game():
         def format_entry(entry):
             return f'{"-" * 25}\nGuess[{entry[0]}]\n{entry[1]}'
 
-        for entry in history:
-            print(format_entry(entry))
+        print([format_entry(entry) for entry in history])
 
         play_again = input("Do you want to play again? ")
         if play_again.lower() == 'n' or play_again.lower() == 'no':
