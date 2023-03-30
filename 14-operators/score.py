@@ -1,6 +1,12 @@
+from datetime import date
+from datetime import datetime
+
 class Score:
     def __init__(self, value=0):
         self.value = value
+        self.day = date.today()
+        now = datetime.now()
+        self.current_time = now.strftime("%H:%M:%S")
 
     # Define a set of methods to provide operator functionality
 
@@ -37,4 +43,4 @@ class Score:
         return self.value <= other.value
 
     def __str__(self):
-        return 'Score[' + str(self.value) + ']'
+        return f'Score[{self.value} {self.day} {self.current_time} ]'
