@@ -5,47 +5,18 @@ class Score:
     # Define a set of methods to provide operator functionality
 
     def __add__(self, other):
-        new_value = self.value + other.value
-        return Score(new_value)
+        if isinstance(other, Score):
+            new_value = self.value + other.value
+            return Score(new_value)
+        else:
+            raise ValueError(f'Invalid type {type(other)}')
 
     def __sub__(self, other):
-        new_value = self.value - other.value
-        return Score(new_value)
-
-    def __mul__(self, other):
-        if isinstance(other, int) or isinstance(other, float):
-            new_value = self.value * other
+        if isinstance(other, Score):
+            new_value = self.value - other.value
+            return Score(new_value)
         else:
-            raise ValueError(f'invalid type {type(other)}')
-        return Score(new_value)
-
-    def __pow__(self, other):
-        if isinstance(other, int) or isinstance(other, float):
-            new_value = self.value ** other.value
-        else:
-            raise ValueError(f'invalid type {type(other)}')
-        return Score(new_value)
-
-    def __truediv__(self, other):
-        if isinstance(other, int) or isinstance(other, float):
-            new_value = self.value / other
-        else:
-            raise ValueError(f'invalid type {type(other)}')
-        return Score(new_value)
-
-    def __floordiv__(self, other):
-        if isinstance(other, int) or isinstance(other, float):
-            new_value = self.value // other.value
-        else:
-            raise ValueError(f'invalid type {type(other)}')
-        return Score(new_value)
-
-    def __mod__(self, other):
-        if isinstance(other, int) or isinstance(other, float):
-            new_value = self.value % other.value
-        else:
-            raise ValueError(f'invalid type {type(other)}')
-        return Score(new_value)
+            raise ValueError(f'Invalid type {type(other)}')
 
     def __eq__(self, other):
         return self.value == other.value
