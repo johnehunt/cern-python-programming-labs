@@ -3,53 +3,18 @@
 
 import random
 import traceback
-from functools import reduce
 
 # Set up some global 'constants'
 MIN_VALUE = 1
 MAX_VALUE = 10
 MAX_NUMBER_OF_GUESSES = 4
-GUESS_PROMPT = 'Please guess a number between ' + str(MIN_VALUE) + ' and ' + str(MAX_VALUE) + ': '
+GUESS_PROMPT = f'Please guess a number between {MIN_VALUE} and {MAX_VALUE}: '
 
 # Set up global variables
 # Low score dictionary
 low_score_dictionary = {}
 # current player
 current_player = None
-
-
-class NumberGuessGameException(Exception):
-    """ Class representing errors in the number guess game"""
-    def __init__(self, msg):
-        super().__init__(msg)
-
-class Player:
-    """ Class to represent a player within the number guess game """
-
-    def __init__(self, name):
-        self.name = name
-        self.guess_count = 0
-        self.history = []
-
-    def __repr__(self):
-        return f'Player {self.name} - history {self.history}'
-
-    def increment_count(self):
-        self.guess_count = self.guess_count + 1
-
-    def add_guess(self, guess):
-        self.history.append(guess)
-
-    def print_history(self):
-        formatted_history = list(map(lambda guess: f'\t guess: {guess}', self.history))
-        for guess in formatted_history:
-            print(guess)
-
-    def make_a_guess(self):
-        guess = get_user_guess(GUESS_PROMPT)
-        if guess != -1:
-            self.increment_count()
-        return guess
 
 
 def welcome_message():
@@ -78,24 +43,24 @@ def game_over_message():
     print('Game Over')
     print('Low Score table:')
     for key in low_score_dictionary:
-        print(f'\t{key.name} = {low_score_dictionary[key]}')
+        print(f'\t{key} = {low_score_dictionary[key]}')
 
     print('-' * 25)
     analyse_low_score_table()
 
 
-def check_current_user():
+def check_current_player():
     global current_player
     check_new_user = 'n'
     if current_player is not None:
-        user_prompt = f'The current user is {current_player.name}, do you wish to enter a new name (y/n): '
+        user_prompt = f'The current user is {current_player}, do you wish to enter a new name (y/n): '
         check_new_user = input(user_prompt).lower()
 
     if check_new_user == 'y' or current_player is None:
-        name = input('Please input your name: ')
-        if name == '':
-            raise NumberGuessGameException('Invalid Name')
-        current_player = Player(name)
+        current_player = input('Please input your name: ')
+
+    if current_player == '':
+        raise ValueError('Invalid Name')
 
 
 def get_user_guess(prompt):
@@ -116,6 +81,11 @@ def get_user_guess(prompt):
     return user_input_int
 
 
+def generate_number_to_guess(start=MIN_VALUE, end=MAX_VALUE):
+    number_to_guess = random.randint(start, end)
+    return number_to_guess
+
+
 def update_low_score_table(user, count_number_of_tries):
     previous_low_score = low_score_dictionary.get(user, 1000)
     if previous_low_score > count_number_of_tries:
@@ -125,10 +95,7 @@ def update_low_score_table(user, count_number_of_tries):
 def analyse_low_score_table():
     low_score_length = len(low_score_dictionary)
     print(f'Number of scores in low score table: {low_score_length}')
-    func = lambda total, item: total + item[1]
-    low_score_total = reduce(func, low_score_dictionary.items(), 0)
-    low_score_average = low_score_total / low_score_length
-    print(f'Average of low scores: {low_score_average}')
+
     # Filter scores
     scores_above_three = list(filter(lambda item: item[1] > 2, low_score_dictionary.items()))
     print(f'Scores above 3 {scores_above_three}')
@@ -153,25 +120,28 @@ def play_game():
     game_over = False
     while not game_over:
 
+        # Initialise the history of guesses
+        history = []
+
         # Initialise the number to be guessed
-        number_to_guess = random.randint(MIN_VALUE, MAX_VALUE)
+        number_to_guess = generate_number_to_guess()
+
+        # Initialise the number of tries the player has made
+        count_number_of_tries = 0
 
         # display instructions if required
         display_instructions()
         # Check the current user setting
-        check_current_user()
-
-        # Initialise the players history of guesses
-        current_player.history = []
+        check_current_player()
 
         # Obtain their initialise guess
         guess = 0
-        while number_to_guess != guess and current_player.guess_count != MAX_NUMBER_OF_GUESSES:
+        while number_to_guess != guess and count_number_of_tries != MAX_NUMBER_OF_GUESSES:
 
             # Set up a message to user variable
             message_to_user = ''
 
-            guess = current_player.make_a_guess()
+            guess = get_user_guess(GUESS_PROMPT)
 
             # Check to see they have not exceeded the maximum
             # number of attempts if so break out of loop otherwise
@@ -181,7 +151,7 @@ def play_game():
                 continue
             elif number_to_guess == guess:
                 message_to_user = 'Correct Guess'
-            elif current_player.guess_count == MAX_NUMBER_OF_GUESSES:
+            elif count_number_of_tries + 1 == MAX_NUMBER_OF_GUESSES:
                 message_to_user = 'Max number of guesses made'
             elif guess + 1 == number_to_guess or guess - 1 == number_to_guess:
                 message_to_user = 'Sorry wrong number - you were out by 1'
@@ -193,21 +163,29 @@ def play_game():
             print(message_to_user)
 
             # Add the guess to the history and increment number of attempts
-            current_player.add_guess((guess, message_to_user))
+            history.append((guess, message_to_user))
+
+            # Obtain their next guess and increment number of attempts
+            count_number_of_tries += 1
 
         # Check to see if they did guess the correct number
         if number_to_guess == guess:
             print('Well done you won!')
-            print(f'You took {current_player.guess_count} goes to complete the game')
+            print(f'You took {count_number_of_tries} goes to complete the game')
         else:
             print("Sorry - you loose")
             print(f'The number you needed to guess was {number_to_guess}')
 
-        update_low_score_table(current_player.name, current_player.guess_count)
+        update_low_score_table(current_player, count_number_of_tries)
 
         # Present the guess history
         print('Your guesses were:')
-        current_player.print_history()
+        print(history)
+
+        def format_entry(entry):
+            return f'{"-" * 25}\nGuess[{entry[0]}]\n{entry[1]}'
+
+        print([format_entry(entry) for entry in history])
 
         play_again = input("Do you want to play again? ")
         if play_again.lower() == 'n' or play_again.lower() == 'no':
@@ -218,8 +196,9 @@ try:
     welcome_message()
     play_game()
     game_over_message()
-except NumberGuessGameException as exp:
-        print('A problem was encountered within the program')
-        print(exp)
-        # printing stack trace
-        traceback.print_exc()
+except ValueError as exp:
+    print('Handling exception')
+    print(exp)
+    traceback.print_exc()
+
+print('Done')
