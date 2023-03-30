@@ -1,4 +1,4 @@
-from player import Score
+from score import Score
 
 s1 = Score(5)
 s2 = Score(6)
