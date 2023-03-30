@@ -11,15 +11,9 @@ def factorial(num):
         return factorial_value
 
 
-data = (5, 8, 10, 15, 3, 6, 4)
-
-
-def main():
+if __name__ == "__main__":
     # Collect results into a list and print using pool.map
+    data = (5, 8, 10, 15, 3, 6, 4)
     with Pool(processes=4) as pool:
         results = pool.map(factorial, data)
         print(results)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,12 +1,9 @@
 import csv
 
-CELSIUS = "Celsius"
-FAHRENHEIT = "Fahrenheit"
-
 class TemperatureReading:
     """ Class representing temperature info """
 
-    def __init__(self, temp, date, location, scale=CELSIUS):
+    def __init__(self, temp, date, location, scale):
         self.temp = temp
         self.date = date
         self.location = location

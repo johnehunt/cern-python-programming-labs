@@ -32,11 +32,5 @@ class Stack:
         return 'Stack' + str(self.contents)
 
     # Support the length protocol
-    def __len__(self):
-        return self.size()
 
     # Implement the iterable protocol
-    def __iter__(self):
-        temp = self.contents.copy()
-        temp.reverse()
-        return iter(temp)

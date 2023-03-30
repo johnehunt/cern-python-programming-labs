@@ -1,10 +1,10 @@
 class Player:
     """ Class to represent a player within the number guess game """
 
-    def __init__(self, name):
+    def __init__(self, name, count=0, history=[]):
         self.name = name
-        self.guess_count = 0
-        self.history = []
+        self.guess_count = count
+        self.history = history
 
     def __repr__(self):
         return f'Player({self.name})'
@@ -25,13 +25,16 @@ class Player:
 
 player1 = Player('John')
 print(player1)
+
 player1.increment_count()
 player1.add_guess(4)
 player1.increment_count()
 player1.add_guess(2)
 print(player1)
+
 print('History:')
 player1.print_history()
+
 player2 = Player('Denise')
 players = [player1, player2]
 print(players)
